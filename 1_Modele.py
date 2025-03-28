@@ -101,8 +101,8 @@ validation_batch_size = 2000  # total 2000 (1000 classe: 2 et 1000 classe: 7)
 
 # Configuration des  images 
 image_scale = 28 # la taille des images
-image_channels = 1  # le nombre de canaux de couleurs (1: pour les images noir et blanc; 3 pour les images en couleurs (rouge vert bleu) )
-images_color_mode = "grayscale"  # grayscale pour les image noir et blanc; rgb pour les images en couleurs 
+image_channels = 3  # le nombre de canaux de couleurs (1: pour les images noir et blanc; 3 pour les images en couleurs (rouge vert bleu) )
+images_color_mode = "rgb"  # grayscale pour les image noir et blanc; rgb pour les images en couleurs 
 image_shape = (image_scale, image_scale, image_channels) # la forme des images d'entrées, ce qui correspond à la couche d'entrée du réseau
 
 # Configuration des paramètres d'entrainement
@@ -160,8 +160,8 @@ def fully_connected(encoded):
     # La fonction sigmoide nous donne une valeur entre 0 et 1
     # On considère les résultats <=0.5 comme l'image appartenant à la classe 0 (c.-à-d. la classe qui correspond au chiffre 2)
     # on considère les résultats >0.5 comme l'image appartenant à la classe 0 (c.-à-d. la classe qui correspond au chiffre 7)
-    x = Dense(1)(x)
-    sortie = Activation('sigmoid')(x)
+    x = Dense(6)(x)
+    sortie = Activation('softmax')(x)
     return sortie
 
 
@@ -203,7 +203,7 @@ training_generator = training_data_generator.flow_from_directory(
     color_mode=images_color_mode, # couleur des images
     target_size=(image_scale, image_scale),# taille des images
     batch_size=training_batch_size, # nombre d'images à entrainer (batch size)
-    class_mode="binary", # classement binaire (problème de 2 classes)
+    class_mode="categorical", # classement catégorique (problème de 6 classes)
     shuffle=True) # on "brasse" (shuffle) les données -> pour prévenir le surapprentissage
 
 # validation_generator: indique la méthode de chargement des données de validation
@@ -212,11 +212,11 @@ validation_generator = validation_data_generator.flow_from_directory(
     color_mode=images_color_mode, # couleur des images
     target_size=(image_scale, image_scale),  # taille des images
     batch_size=validation_batch_size,  # nombre d'images à valider
-    class_mode="binary",  # classement binaire (problème de 2 classes)
+    class_mode="categorical",  # classement catégorique (problème de 6 classes)
     shuffle=True) # on "brasse" (shuffle) les données -> pour prévenir le surapprentissage
 
 # On imprime l'indice de chaque classe (Keras numerote les classes selon l'ordre des dossiers des classes)
-# Dans ce cas => [2: 0 et 7:1]
+
 print(training_generator.class_indices)
 print(validation_generator.class_indices)
 
