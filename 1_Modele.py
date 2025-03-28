@@ -76,7 +76,7 @@ import matplotlib.pyplot as plt
 # ******************************************************
 
 # Le dossier principal qui contient les données
-mainDataPath = "mnist/"
+mainDataPath = "donnee/"
 
 # Le dossier contenant les images d'entrainement
 trainPath = mainDataPath + "entrainement"
@@ -96,8 +96,8 @@ modelsPath = "Model.keras"
 # Si on utilise l’ensemble de données d’entrainement en entier, le processus va être long car on devrait ajuster les paramètres et reprendre le processus sur tout l’ensemble des données d’entrainement.
 
 
-training_batch_size = 8000  # total 8000 (4000 classe: 2 et 4000 classe: 7)
-validation_batch_size = 2000  # total 2000 (1000 classe: 2 et 1000 classe: 7)
+training_batch_size = 19200  # total 19200 (3200 de chaque classe)
+validation_batch_size = 4800  # total 4800 (700 de chaque classe)
 
 # Configuration des  images 
 image_scale = 28 # la taille des images
