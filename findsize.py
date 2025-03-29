@@ -10,7 +10,7 @@ subfolders = [f.path for f in os.scandir(main_folder) if f.is_dir()]
 # Iterate over each subfolder
 for subfolder in subfolders:
     # Get all images in the subfolder
-    images = [f.path for f in os.scandir(subfolder) if f.is_file() and f.path.endswith(('.jpg', '.png', '.jpeg'))]
+    images = [f.path for f in os.scandir(subfolder) if f.is_file() and f.path.endswith(('.jpg'))]
     
     # Initialize maximum width and height
     max_width = 0
