@@ -3,8 +3,9 @@ from PIL import Image
 
 # Path to the main folder
 main_folder = "donnees"
-subfolders=[]
+
 # Get all subfolders in the main folder
+subfolders=[]
 for f in os.scandir(main_folder):
     if f.is_dir():
         subfolders.append(f.path)

@@ -3,8 +3,9 @@ import numpy as np
 
 image_scale = 256
 main_folder = "donnees"
+destination_folder = "donnees_nouvelles"
 
-def load_and_preprocess_image(image_path, target_size, method='resize'):
+def preprocess_image(image_path, target_size, method='resize'):
     """
     Load and preprocess an image to fit target_size
     
@@ -46,15 +47,13 @@ for f in os.scandir(main_folder):
 
 # Iterate over each subfolder
 for subfolder in subfolders:
-    # Get all images in the subfolder
-
     animals = [f.path for f in os.scandir(subfolder) if f.is_dir()]
-
-for animal in animals:
-    images = [f.path for f in os.scandir(animal) if f.is_file() and f.path.endswith(('.jpg'))]
- 
-
+    for animal in animals:
+        images = [f.path for f in os.scandir(animal) if f.is_file() and f.path.endswith(('.jpg'))]
+        
+        # Iterate over each image
+        for image in images:
+            preprocess_image(image).save(destination_folder+image)
 
 # Example usage:
-image_path = "path/to/your/image.jpg"
-processed_img = load_and_preprocess_image(image_path, image_scale, method='pad')
+processed_img = preprocess_image(image_path, image_scale, method='pad')
