@@ -1,6 +1,9 @@
 from PIL import Image
 import numpy as np
 
+image_scale = 256
+main_folder = "donnees"
+
 def load_and_preprocess_image(image_path, target_size, method='resize'):
     """
     Load and preprocess an image to fit target_size
@@ -11,12 +14,8 @@ def load_and_preprocess_image(image_path, target_size, method='resize'):
     - 'crop': Maintain aspect ratio and crop excess
     """
     img = Image.open(image_path)
-    
-    if method == 'resize':
-        # Simple resize (might distort image)
-        return img.resize((target_size, target_size))
-        
-    elif method == 'pad':
+      
+    if method == 'pad':
         new_img = Image.new('RGB', (target_size, target_size), (0,0,0))
         # Paste resized image in center
         upper_left_x = (target_size - new_size[0])//2
@@ -38,18 +37,23 @@ def load_and_preprocess_image(image_path, target_size, method='resize'):
         new_img.paste(img, (upper_left_x, upper_left_y))
         return new_img
         
-    elif method == 'crop':
-        # Resize maintaining aspect ratio and crop excess
-        ratio = max(target_size/img.size[0], target_size/img.size[1])
-        new_size = tuple([int(x*ratio) for x in img.size])
-        img = img.resize(new_size, Image.Resampling.LANCZOS)
-        
-        # Center crop
-        left = (img.size[0] - target_size)//2
-        top = (img.size[1] - target_size)//2
-        right = left + target_size
-        bottom = top + target_size
-        return img.crop((left, top, right, bottom))
+    
+# Get all subfolders in the main folder
+subfolders = []
+for f in os.scandir(main_folder):
+    if f.is_dir():
+        subfolders.append(f.path)
+
+# Iterate over each subfolder
+for subfolder in subfolders:
+    # Get all images in the subfolder
+
+    animals = [f.path for f in os.scandir(subfolder) if f.is_dir()]
+
+for animal in animals:
+    images = [f.path for f in os.scandir(animal) if f.is_file() and f.path.endswith(('.jpg'))]
+ 
+
 
 # Example usage:
 image_path = "path/to/your/image.jpg"
