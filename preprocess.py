@@ -15,8 +15,16 @@ def load_and_preprocess_image(image_path, target_size, method='resize'):
     if method == 'resize':
         # Simple resize (might distort image)
         return img.resize((target_size, target_size))
-    
+        
     elif method == 'pad':
+        new_img = Image.new('RGB', (target_size, target_size), (0,0,0))
+        # Paste resized image in center
+        upper_left_x = (target_size - new_size[0])//2
+        upper_left_y = (target_size - new_size[1])//2
+        new_img.paste(img, (upper_left_x, upper_left_y))
+        return new_img
+    
+    elif method == 'resizepad':
         # Resize maintaining aspect ratio and pad with zeros
         ratio = min(target_size/img.size[0], target_size/img.size[1])
         new_size = tuple([int(x*ratio) for x in img.size])
