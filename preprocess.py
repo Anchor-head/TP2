@@ -2,7 +2,6 @@ from PIL import Image
 import os
 
 image_scale = 256
-main_folder = "donnees"
 destination_folder = "donnees_nouvelles"
 
 def preprocess_image(image_path, target_size, method='pad'):
@@ -41,7 +40,8 @@ def preprocess_image(image_path, target_size, method='pad'):
     
 # Get all subfolders in the main folder
 subfolders = []
-for f in os.scandir(main_folder):
+os.chdir("donnees")
+for f in os.scandir(os.getcwd()):
     if f.is_dir():
         subfolders.append(f.path)
 
@@ -50,10 +50,10 @@ for subfolder in subfolders:
     animals = [f.path for f in os.scandir(subfolder) if f.is_dir()]
     for animal in animals:
         images = [f.path for f in os.scandir(animal) if f.is_file() and f.path.endswith(('.jpg'))]
-        
+        os.chdir('..\\donnees_nouvelles')
+        if not os.path.isdir(animal):
+            os.makedirs(animal)
         # Iterate over each image
         for image in images:
-            if not os.path.isdir(""): 
-                os.makedirs("")
-            preprocess_image(image,image_scale).save(destination_folder+image)
-
+            preprocess_image(image,image_scale).save(image)
+        os.chdir('..\\donnees')
