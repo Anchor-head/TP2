@@ -1,11 +1,11 @@
 from PIL import Image
-import numpy as np
+import os
 
 image_scale = 256
 main_folder = "donnees"
 destination_folder = "donnees_nouvelles"
 
-def preprocess_image(image_path, target_size, method='resize'):
+def preprocess_image(image_path, target_size, method='pad'):
     """
     Load and preprocess an image to fit target_size
     
@@ -53,7 +53,7 @@ for subfolder in subfolders:
         
         # Iterate over each image
         for image in images:
-            preprocess_image(image).save(destination_folder+image)
+            if not os.path.isdir(""): 
+                os.makedirs("")
+            preprocess_image(image,image_scale).save(destination_folder+image)
 
-# Example usage:
-processed_img = preprocess_image(image_path, image_scale, method='pad')
