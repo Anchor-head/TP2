@@ -18,8 +18,8 @@ def preprocess_image(image_path, target_size, method='pad'):
     if method == 'pad':
         new_img = Image.new('RGB', (target_size, target_size), (0,0,0))
         # Paste resized image in center
-        upper_left_x = (target_size - new_size[0])//2
-        upper_left_y = (target_size - new_size[1])//2
+        upper_left_x = (target_size - img.size[0])//2
+        upper_left_y = (target_size - img.size[1])//2
         new_img.paste(img, (upper_left_x, upper_left_y))
         return new_img
     
@@ -41,7 +41,7 @@ def preprocess_image(image_path, target_size, method='pad'):
 # Get all subfolders in the main folder
 subfolders = []
 os.chdir("donnees")
-for f in os.scandir(os.getcwd()):
+for f in os.scandir():
     if f.is_dir():
         subfolders.append(f.path)
 
@@ -55,5 +55,5 @@ for subfolder in subfolders:
             os.makedirs(animal)
         # Iterate over each image
         for image in images:
-            preprocess_image(image,image_scale).save(image)
+            preprocess_image(f'..\\donnees\\{image}',image_scale).save(image)
         os.chdir('..\\donnees')
