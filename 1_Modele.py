@@ -76,7 +76,7 @@ import matplotlib.pyplot as plt
 # ******************************************************
 
 # Le dossier principal qui contient les données
-mainDataPath = "donnee/"
+mainDataPath = "donnees/"
 
 # Le dossier contenant les images d'entrainement
 trainPath = mainDataPath + "entrainement"
@@ -100,7 +100,7 @@ training_batch_size = 19200  # total 19200 (3200 de chaque classe)
 validation_batch_size = 4800  # total 4800 (700 de chaque classe)
 
 # Configuration des  images 
-image_scale = 28 # la taille des images
+image_scale = 256 # la taille des images
 image_channels = 3  # le nombre de canaux de couleurs (1: pour les images noir et blanc; 3 pour les images en couleurs (rouge vert bleu) )
 images_color_mode = "rgb"  # grayscale pour les image noir et blanc; rgb pour les images en couleurs 
 image_shape = (image_scale, image_scale, image_channels) # la forme des images d'entrées, ce qui correspond à la couche d'entrée du réseau
