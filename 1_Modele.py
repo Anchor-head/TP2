@@ -76,7 +76,7 @@ import matplotlib.pyplot as plt
 # ******************************************************
 
 # Le dossier principal qui contient les données
-mainDataPath = "donnees/"
+mainDataPath = "donnees_nouvelles/"
 
 # Le dossier contenant les images d'entrainement
 trainPath = mainDataPath + "entrainement"
@@ -97,7 +97,7 @@ modelsPath = "Model.keras"
 
 
 training_batch_size = 19200  # total 19200 (3200 de chaque classe)
-validation_batch_size = 4800  # total 4800 (700 de chaque classe)
+validation_batch_size = 4800  # total 4800 (800 de chaque classe)
 
 # Configuration des  images 
 image_scale = 256 # la taille des images
