@@ -1,6 +1,7 @@
 # **************************************************************************
-# INF7370 Apprentissage automatique 
-# Travail pratique 2 
+# Philip Voinea
+# INF7370 Apprentissage automatique
+# Travail pratique 2
 # ===========================================================================
 
 # #===========================================================================
@@ -12,11 +13,11 @@
 # ------------------------------------------------
 # entrainement : classe '2': 4 000 images | classe '7': images 4 000 images
 # validation   : classe '2': 1 000 images | classe '7': images 1 000 images
-# test         : classe '2': 1 000 images | classe '7': images 1 000 images 
+# test         : classe '2': 1 000 images | classe '7': images 1 000 images
 # ------------------------------------------------
 
-#>>> Ce code fonctionne sur MNIST. 
-#>>> Vous devez donc intervenir sur ce code afin de l'adapter aux données du TP. 
+#>>> Ce code fonctionne sur MNIST.
+#>>> Vous devez donc intervenir sur ce code afin de l'adapter aux données du TP.
 #>>> À cette fin repérer les section QUESTION et insérer votre code et modification à ces endroits
 
 # ==========================================
@@ -54,7 +55,7 @@ from keras import backend as K
 # Sauvegarde du modèle
 from keras.models import load_model
 
-# Affichage des graphes 
+# Affichage des graphes
 import matplotlib.pyplot as plt
 
 # ==========================================
@@ -92,22 +93,21 @@ modelsPath = "Model.keras"
 
 
 # Le nombre d'images d'entrainement et de validation
-# Il faut en premier lieu identifier les paramètres du CNN qui permettent d’arriver à des bons résultats. À cette fin, la démarche générale consiste à utiliser une partie des données d’entrainement et valider les résultats avec les données de validation. Les paramètres du réseaux (nombre de couches de convolutions, de pooling, nombre de filtres, etc) devrait etre ajustés en conséquence.  Ce processus devrait se répéter jusqu’au l’obtention d’une configuration (architecture) satisfaisante. 
+# Il faut en premier lieu identifier les paramètres du CNN qui permettent d’arriver à des bons résultats. À cette fin, la démarche générale consiste à utiliser une partie des données d’entrainement et valider les résultats avec les données de validation. Les paramètres du réseaux (nombre de couches de convolutions, de pooling, nombre de filtres, etc) devrait etre ajustés en conséquence.  Ce processus devrait se répéter jusqu’au l’obtention d’une configuration (architecture) satisfaisante.
 # Si on utilise l’ensemble de données d’entrainement en entier, le processus va être long car on devrait ajuster les paramètres et reprendre le processus sur tout l’ensemble des données d’entrainement.
 
 
-training_batch_size = 19200  # total 19200 (3200 de chaque classe)
-validation_batch_size = 4800  # total 4800 (800 de chaque classe)
+batch_size = 32  # 19200 training (3200 de chaque classe) 4800 validation (800 de chaque classe)
 
-# Configuration des  images 
+# Configuration des  images
 image_scale = 256 # la taille des images
 image_channels = 3  # le nombre de canaux de couleurs (1: pour les images noir et blanc; 3 pour les images en couleurs (rouge vert bleu) )
-images_color_mode = "rgb"  # grayscale pour les image noir et blanc; rgb pour les images en couleurs 
+images_color_mode = "rgb"  # grayscale pour les image noir et blanc; rgb pour les images en couleurs
 image_shape = (image_scale, image_scale, image_channels) # la forme des images d'entrées, ce qui correspond à la couche d'entrée du réseau
 
 # Configuration des paramètres d'entrainement
-fit_batch_size = 32 # le nombre d'images entrainées ensemble: un batch
-fit_epochs = 10 # Le nombre d'époques 
+# fit_batch_size = 32 # le nombre d'images entrainées ensemble: un batch
+fit_epochs = 10 # Le nombre d'époques
 
 # ==========================================
 # ==================MODÈLE==================
@@ -128,22 +128,22 @@ input_layer = Input(shape=image_shape)
 
 # Partie feature extraction (ou cascade de couches d'extraction des caractéristiques)
 def feature_extraction(input):
-  
-    # 1-couche de convolution avec nombre de filtre  (exp 32)  avec la taille de la fenetre de ballaiage exp : 3x3 
+
+    # 1-couche de convolution avec nombre de filtre  (exp 32)  avec la taille de la fenetre de ballaiage exp : 3x3
     # 2-fonction d'activation exp: sigmoid, relu, tanh ...
-    # 3-couche d'echantillonage (pooling) pour reduire la taille avec la taille de la fenetre de ballaiage exp :2x2  
-    
+    # 3-couche d'echantillonage (pooling) pour reduire la taille avec la taille de la fenetre de ballaiage exp :2x2
+
     # **** On répète ces étapes tant que nécessaire ****
-    
-    x = Conv2D(32, (3, 3), padding='same')(input) 
-    x = Activation("sigmoid")(x)
+
+    x = Conv2D(32, (3, 3), padding='same')(input)
+    x = Activation("relu")(x)
     x = MaxPooling2D((2, 2), padding='same')(x)
-    
-    
+
+
     x = Conv2D(64, (3, 3), padding='same')(x)
-    x = Activation("sigmoid")(x)
+    x = Activation("relu")(x)
     encoded = MaxPooling2D((2, 2), padding='same')(x)  # L'ensemble des features/caractéristiques extraits
-    
+
     return encoded
 
 
@@ -154,8 +154,8 @@ def fully_connected(encoded):
     # fonction d'activation exp: sigmoid, relu, tanh ...
     x = Flatten(input_shape=image_shape)(encoded)
     x = Dense(64)(x)
-    x = Activation("sigmoid")(x)
-    
+    x = Activation("relu")(x)
+
     # Puisque'on a une classification binaire, la dernière couche doit être formée d'un seul neurone avec une fonction d'activation sigmoide
     # La fonction sigmoide nous donne une valeur entre 0 et 1
     # On considère les résultats <=0.5 comme l'image appartenant à la classe 0 (c.-à-d. la classe qui correspond au chiffre 2)
@@ -170,14 +170,14 @@ def fully_connected(encoded):
 model = Model(input_layer, fully_connected(feature_extraction(input_layer)))
 
 # Affichage des paramétres du modèle
-# Cette commande affiche un tableau avec les détails du modèle 
+# Cette commande affiche un tableau avec les détails du modèle
 # (nombre de couches et de paramétrer ...)
 model.summary()
 
 # Compilation du modèle :
 # On définit la fonction de perte (exemple :loss='binary_crossentropy' ou loss='mse')
 # L'optimisateur utilisé avec ses paramétres (Exemple : optimizer=adam(learning_rate=0.001) )
-# La valeur à afficher durant l'entrainement, metrics=['accuracy'] 
+# La valeur à afficher durant l'entrainement, metrics=['accuracy']
 model.compile(loss='mse', optimizer='adam', metrics=['accuracy'])
 
 # ==========================================
@@ -185,7 +185,7 @@ model.compile(loss='mse', optimizer='adam', metrics=['accuracy'])
 # ==========================================
 
 # training_data_generator: charge les données d'entrainement en mémoire
-# quand il charge les images, il les ajuste (change la taille, les dimensions, la direction ...) 
+# quand il charge les images, il les ajuste (change la taille, les dimensions, la direction ...)
 # aléatoirement afin de rendre le modèle plus robuste à la position du sujet dans les images
 # Note: On peut utiliser cette méthode pour augmenter le nombre d'images d'entrainement (data augmentation)
 training_data_generator = ImageDataGenerator(
@@ -202,7 +202,7 @@ training_generator = training_data_generator.flow_from_directory(
     trainPath, # Place des images d'entrainement
     color_mode=images_color_mode, # couleur des images
     target_size=(image_scale, image_scale),# taille des images
-    batch_size=training_batch_size, # nombre d'images à entrainer (batch size)
+    batch_size=batch_size, # nombre d'images à entrainer (batch size)
     class_mode="categorical", # classement catégorique (problème de 6 classes)
     shuffle=True) # on "brasse" (shuffle) les données -> pour prévenir le surapprentissage
 
@@ -211,7 +211,7 @@ validation_generator = validation_data_generator.flow_from_directory(
     validationPath, # Place des images de validation
     color_mode=images_color_mode, # couleur des images
     target_size=(image_scale, image_scale),  # taille des images
-    batch_size=validation_batch_size,  # nombre d'images à valider
+    batch_size=batch_size,  # nombre d'images à valider
     class_mode="categorical",  # classement catégorique (problème de 6 classes)
     shuffle=True) # on "brasse" (shuffle) les données -> pour prévenir le surapprentissage
 
@@ -225,26 +225,26 @@ print(validation_generator.class_indices)
 # y_train: Les Ètiquettes des données d'entrainement
 # x_val: Les données de validation
 # y_val: Les Ètiquettes des données de validation
-(x_train, y_train) = next(training_generator)
-(x_val, y_val) = next(validation_generator)
+#(x_train, y_train) = next(training_generator)
+#(x_val, y_val) = next(validation_generator)
 
 # ==========================================
 # ==============ENTRAINEMENT================
 # ==========================================
 
-# Savegarder le modèle avec la meilleure validation accuracy ('val_acc') 
+# Savegarder le modèle avec la meilleure validation accuracy ('val_acc')
 # Note: on sauvegarder le modèle seulement quand la précision de la validation s'améliore
 modelcheckpoint = ModelCheckpoint(filepath=modelsPath,
                                   monitor='val_accuracy', verbose=1, save_best_only=True, mode='auto')
 
 # entrainement du modèle
-classifier = model.fit(x_train, y_train,
+classifier = model.fit(training_generator,
                        epochs=fit_epochs, # nombre d'époques
-                       batch_size=fit_batch_size, # nombre d'images entrainées ensemble
-                       validation_data=(x_val, y_val), # données de validation
+                       #batch_size=fit_batch_size, # nombre d'images entrainées ensemble
+                       validation_data=validation_generator, # données de validation
                        verbose=1, # mets cette valeur ‡ 0, si vous voulez ne pas afficher les détails d'entrainement
                        callbacks=[modelcheckpoint], # les fonctions à appeler à la fin de chaque époque (dans ce cas modelcheckpoint: qui sauvegarde le modèle)
-                       shuffle=True)# shuffle les images 
+                       shuffle=True)# shuffle les images
 
 # ==========================================
 # ========AFFICHAGE DES RESULTATS===========
