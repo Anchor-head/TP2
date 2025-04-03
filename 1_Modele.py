@@ -97,7 +97,7 @@ modelsPath = "Model.keras"
 # Si on utilise l’ensemble de données d’entrainement en entier, le processus va être long car on devrait ajuster les paramètres et reprendre le processus sur tout l’ensemble des données d’entrainement.
 
 
-batch_size = 32  # 19200 training (3200 de chaque classe) 4800 validation (800 de chaque classe)
+batch_size = 64  # 19200 training (3200 de chaque classe) 4800 validation (800 de chaque classe)
 
 # Configuration des  images
 image_scale = 256 # la taille des images
@@ -147,8 +147,8 @@ def feature_extraction(input):
     x = Conv2D(128, (3, 3), padding='same', activation='relu')(x)
     x = Conv2D(128, (3, 3), padding='same', activation='relu')(x)
     x = BatchNormalization()(x)
-    x = MaxPooling2D((2, 2), padding='same')(x) 
-    #x = Dropout(0.25)(x) # L'ensemble des features/caractéristiques extraits
+    x = MaxPooling2D((2, 2), padding='same')(x)
+    #x = Dropout(0.2)(x) # L'ensemble des features/caractéristiques extraits
 
     return x
 
@@ -162,6 +162,7 @@ def fully_connected(encoded):
     x = Dense(512, activation='relu')(x)
     x = Dropout(0.2)(x)
     x = Dense(256, activation='relu')(x)
+    x= Dropout(0.2)(x)
     sortie = Dense(6, activation='softmax')(x)
     return sortie
     # Puisque'on a une classification binaire, la dernière couche doit être formée d'un seul neurone avec une fonction d'activation sigmoide
