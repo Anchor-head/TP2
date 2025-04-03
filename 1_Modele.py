@@ -134,17 +134,23 @@ def feature_extraction(input):
     # 3-couche d'echantillonage (pooling) pour reduire la taille avec la taille de la fenetre de ballaiage exp :2x2
 
     # **** On répète ces étapes tant que nécessaire ****
+    x = Conv2D(32, (3, 3), padding='same', activation='relu')(input)
+    x = Conv2D(32, (3, 3), padding='same', activation='relu')(x)
+    x = BatchNormalization()(x)
+    x = MaxPooling2D((2, 2),padding='same')(x)
 
-    x = Conv2D(32, (3, 3), padding='same')(input)
-    x = Activation("relu")(x)
+    x = Conv2D(64, (3, 3), padding='same', activation='relu')(x)
+    x = Conv2D(64, (3, 3), padding='same', activation='relu')(x)
+    x = BatchNormalization()(x)
     x = MaxPooling2D((2, 2), padding='same')(x)
 
+    x = Conv2D(128, (3, 3), padding='same', activation='relu')(x)
+    x = Conv2D(128, (3, 3), padding='same', activation='relu')(x)
+    x = BatchNormalization()(x)
+    x = MaxPooling2D((2, 2), padding='same')(x) 
+    #x = Dropout(0.25)(x) # L'ensemble des features/caractéristiques extraits
 
-    x = Conv2D(64, (3, 3), padding='same')(x)
-    x = Activation("relu")(x)
-    encoded = MaxPooling2D((2, 2), padding='same')(x)  # L'ensemble des features/caractéristiques extraits
-
-    return encoded
+    return x
 
 
 # Partie complètement connectée (Fully Connected Layer)
@@ -152,18 +158,16 @@ def fully_connected(encoded):
     # Flatten: pour convertir les matrices en vecteurs pour la couche MLP
     # Dense: une couche neuronale simple avec le nombre de neurone (exemple 64)
     # fonction d'activation exp: sigmoid, relu, tanh ...
-    x = Flatten(input_shape=image_shape)(encoded)
-    x = Dense(64)(x)
-    x = Activation("relu")(x)
-
+    x = Flatten()(encoded)
+    x = Dense(512, activation='relu')(x)
+    x = Dropout(0.2)(x)
+    x = Dense(256, activation='relu')(x)
+    sortie = Dense(6, activation='softmax')(x)
+    return sortie
     # Puisque'on a une classification binaire, la dernière couche doit être formée d'un seul neurone avec une fonction d'activation sigmoide
     # La fonction sigmoide nous donne une valeur entre 0 et 1
     # On considère les résultats <=0.5 comme l'image appartenant à la classe 0 (c.-à-d. la classe qui correspond au chiffre 2)
     # on considère les résultats >0.5 comme l'image appartenant à la classe 0 (c.-à-d. la classe qui correspond au chiffre 7)
-    x = Dense(6)(x)
-    sortie = Activation('softmax')(x)
-    return sortie
-
 
 # Déclaration du modèle:
 # La sortie de l'extracteur des features sert comme entrée à la couche complétement connectée
@@ -178,7 +182,7 @@ model.summary()
 # On définit la fonction de perte (exemple :loss='binary_crossentropy' ou loss='mse')
 # L'optimisateur utilisé avec ses paramétres (Exemple : optimizer=adam(learning_rate=0.001) )
 # La valeur à afficher durant l'entrainement, metrics=['accuracy']
-model.compile(loss='mse', optimizer='adam', metrics=['accuracy'])
+model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
 # ==========================================
 # ==========CHARGEMENT DES IMAGES===========
