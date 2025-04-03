@@ -107,7 +107,7 @@ image_shape = (image_scale, image_scale, image_channels) # la forme des images d
 
 # Configuration des paramètres d'entrainement
 # fit_batch_size = 32 # le nombre d'images entrainées ensemble: un batch
-fit_epochs = 10 # Le nombre d'époques
+fit_epochs = 50 # Le nombre d'époques
 
 # ==========================================
 # ==================MODÈLE==================
