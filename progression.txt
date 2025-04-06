@@ -1,0 +1,84 @@
+BIGL1L2
+Epoch 42: val_accuracy did not improve from 0.75979
+300/300 ━━━━━━━━━━━━━━━━━━━━ 381s 1s/step - accuracy: 0.7410 - loss: 76.6983 - val_accuracy: 0.7500 - val_loss: 76.8140
+Epoch 37: val_accuracy improved from 0.75521 to 0.75979, saving model to /content/drive/MyDrive/ModelBIGL1L2.keras
+300/300 ━━━━━━━━━━━━━━━━━━━━ 379s 1s/step - accuracy: 0.7314 - loss: 76.6458 - val_accuracy: 0.7598 - val_loss: 76.9247
+	+
+Epoch 15: val_accuracy did not improve from 0.77958
+300/300 ━━━━━━━━━━━━━━━━━━━━ 356s 1s/step - accuracy: 0.7675 - loss: 79.4475 - val_accuracy: 0.7042 - val_loss: 82.0840
+Epoch 11: val_accuracy improved from 0.76542 to 0.77958, saving model to /content/drive/MyDrive/ModelBIGL1L2+.keras
+300/300 ━━━━━━━━━━━━━━━━━━━━ 357s 1s/step - accuracy: 0.7575 - loss: 78.5729 - val_accuracy: 0.7796 - val_loss: 82.7092
+accuracy: 0.7632 - loss: 82.7701
+>Test loss (Erreur): 82.68428039550781
+>Test précision: 0.7911666631698608
+	+
+Epoch 22: val_accuracy did not improve from 0.80687
+300/300 ━━━━━━━━━━━━━━━━━━━━ 334s 1s/step - accuracy: 0.7915 - loss: 82.8321 - val_accuracy: 0.7987 - val_loss: 83.7415
+Epoch 18: val_accuracy improved from 0.79292 to 0.80687, saving model to /content/drive/MyDrive/ModelBIGL1L2++.keras
+300/300 ━━━━━━━━━━━━━━━━━━━━ 332s 1s/step - accuracy: 0.7874 - loss: 81.9628 - val_accuracy: 0.8069 - val_loss: 85.4827
+accuracy: 0.7780 - loss: 85.5629
+>Test loss (Erreur): 85.451416015625
+>Test précision: 0.8134999871253967
+	aug (Leaky)
+Epoch 6: val_accuracy improved from 0.78604 to 0.80417, saving model to /content/drive/MyDrive/ModelBIGL1L2++aug.keras
+300/300 ━━━━━━━━━━━━━━━━━━━━ 401s 1s/step - accuracy: 0.7571 - loss: 76.1884 - val_accuracy: 0.8042 - val_loss: 78.7573
+???
+
+
+CONVDROP
+Epoch 30: val_accuracy did not improve from 0.70896
+300/300 ━━━━━━━━━━━━━━━━━━━━ 326s 1s/step - accuracy: 0.6992 - loss: 0.7603 - val_accuracy: 0.6908 - val_loss: 0.7829
+Epoch 29: val_accuracy improved from 0.68104 to 0.70896, saving model to /content/drive/MyDrive/ModelCONVDROP.keras
+300/300 ━━━━━━━━━━━━━━━━━━━━ 339s 1s/step - accuracy: 0.6894 - loss: 0.7808 - val_accuracy: 0.7090 - val_loss: 0.7548					29
+	+
+Epoch 34: val_accuracy did not improve from 0.81042
+300/300 ━━━━━━━━━━━━━━━━━━━━ 340s 1s/step - accuracy: 0.8566 - loss: 0.4193 - val_accuracy: 0.7677 - val_loss: 0.6915
+Epoch 31: val_accuracy improved from 0.80354 to 0.81042, saving model to /content/drive/MyDrive/ModelCONVDROP+.keras
+300/300 ━━━━━━━━━━━━━━━━━━━━ 351s 1s/step - accuracy: 0.8638 - loss: 0.3942 - val_accuracy: 0.8104 - val_loss: 0.5957					60
+accuracy: 0.7951 - loss: 0.5802
+>Test loss (Erreur): 0.5273973941802979
+>Test précision: 0.8171666860580444
+	aug
+Epoch 7: val_accuracy did not improve from 0.79500
+300/300 ━━━━━━━━━━━━━━━━━━━━ 422s 1s/step - accuracy: 0.7430 - loss: 0.7016 - val_accuracy: 0.7721 - val_loss: 0.6485
+Epoch 6: val_accuracy improved from 0.77729 to 0.79500, saving model to /content/drive/MyDrive/ModelCONVDROP+aug.keras
+300/300 ━━━━━━━━━━━━━━━━━━━━ 438s 1s/step - accuracy: 0.7315 - loss: 0.7296 - val_accuracy: 0.7950 - val_loss: 0.5935					66
+accuracy: 0.7998 - loss: 0.5870
+>Test loss (Erreur): 0.5345854759216309
+>Test précision: 0.8116666674613953
+	+ (L1L2)
+Epoch 5: val_accuracy improved from 0.79958 to 0.81479, saving model to /content/drive/MyDrive/ModelCONVDROP+aug+.keras
+300/300 ━━━━━━━━━━━━━━━━━━━━ 391s 1s/step - accuracy: 0.7804 - loss: 1.4424 - val_accuracy: 0.8148 - val_loss: 1.3260					71
+accuracy: 0.7941 - loss: 1.3666
+>Test loss (Erreur): 1.2669901847839355
+>Test précision: 0.8348333239555359
+	+
+Epoch 10: val_accuracy did not improve from 0.82083
+300/300 ━━━━━━━━━━━━━━━━━━━━ 381s 1s/step - accuracy: 0.8083 - loss: 1.0587 - val_accuracy: 0.7800 - val_loss: 1.1842
+Epoch 5: val_accuracy improved from 0.82000 to 0.82083, saving model to /content/drive/MyDrive/ModelCONVDROP+aug++.keras
+300/300 ━━━━━━━━━━━━━━━━━━━━ 393s 1s/step - accuracy: 0.7911 - loss: 1.1907 - val_accuracy: 0.8208 - val_loss: 1.0958					76
+accuracy: 0.8004 - loss: 1.1647
+>Test loss (Erreur): 1.0634289979934692
+>Test précision: 0.8370000123977661
+	+
+Epoch 10: val_accuracy did not improve from 0.82167
+300/300 ━━━━━━━━━━━━━━━━━━━━ 381s 1s/step - accuracy: 0.8078 - loss: 1.0761 - val_accuracy: 0.7833 - val_loss: 1.1464
+Epoch 8: val_accuracy improved from 0.81687 to 0.82167, saving model to /content/drive/MyDrive/Copy of ModelCONVDROP+aug++.keras
+300/300 ━━━━━━━━━━━━━━━━━━━━ 389s 1s/step - accuracy: 0.8174 - loss: 1.0467 - val_accuracy: 0.8217 - val_loss: 1.0474					84
+accuracy: 0.8110 - loss: 1.0603
+>Test loss (Erreur): 0.9888350367546082
+>Test précision: 0.8363333344459534
+	4
+Epoch 31: val_accuracy improved from 0.85542 to 0.85896, saving model to /content/drive/MyDrive/ModelCONVDROP+aug4.keras
+300/300 ━━━━━━━━━━━━━━━━━━━━ 392s 1s/step - accuracy: 0.8506 - loss: 0.9513 - val_accuracy: 0.8590 - val_loss: 0.9079					115
+accuracy: 0.8281 - loss: 1.0145
+>Test loss (Erreur): 0.8991389870643616
+>Test précision: 0.8675000071525574
+	FINAL
+Epoch 22: val_accuracy did not improve from 0.87250
+300/300 ━━━━━━━━━━━━━━━━━━━━ 468s 2s/step - accuracy: 0.8546 - loss: 1.0381 - val_accuracy: 0.8565 - val_loss: 1.0046
+Epoch 8: val_accuracy improved from 0.86729 to 0.87250, saving model to /content/drive/MyDrive/ModelFINAL.keras
+300/300 ━━━━━━━━━━━━━━━━━━━━ 509s 2s/step - accuracy: 0.8561 - loss: 1.0024 - val_accuracy: 0.8725 - val_loss: 0.9616
+accuracy: 0.8368 - loss: 1.0613
+>Test loss (Erreur): 0.9403263330459595
+>Test précision: 0.8788333535194397

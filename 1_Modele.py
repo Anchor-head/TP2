@@ -44,6 +44,7 @@ from keras.optimizers import Adam
 
 # Les types des couches utlilisées dans notre modèle
 from keras.layers import Conv2D, MaxPooling2D, Input, BatchNormalization, UpSampling2D, Activation, Dropout, Flatten, Dense
+from keras.regularizers import L1L2
 
 # Des outils pour suivre et gérer l'entrainement de notre modèle
 from keras.callbacks import CSVLogger, ModelCheckpoint, EarlyStopping
@@ -107,7 +108,7 @@ image_shape = (image_scale, image_scale, image_channels) # la forme des images d
 
 # Configuration des paramètres d'entrainement
 # fit_batch_size = 32 # le nombre d'images entrainées ensemble: un batch
-fit_epochs = 50 # Le nombre d'époques
+fit_epochs = 100 # Le nombre d'époques
 
 # ==========================================
 # ==================MODÈLE==================
@@ -138,17 +139,19 @@ def feature_extraction(input):
     x = Conv2D(32, (3, 3), padding='same', activation='relu')(x)
     x = BatchNormalization()(x)
     x = MaxPooling2D((2, 2),padding='same')(x)
+    x = Dropout(0.2)(x)
 
     x = Conv2D(64, (3, 3), padding='same', activation='relu')(x)
     x = Conv2D(64, (3, 3), padding='same', activation='relu')(x)
     x = BatchNormalization()(x)
     x = MaxPooling2D((2, 2), padding='same')(x)
+    x = Dropout(0.2)(x)
 
     x = Conv2D(128, (3, 3), padding='same', activation='relu')(x)
     x = Conv2D(128, (3, 3), padding='same', activation='relu')(x)
     x = BatchNormalization()(x)
     x = MaxPooling2D((2, 2), padding='same')(x)
-    #x = Dropout(0.2)(x) # L'ensemble des features/caractéristiques extraits
+    x = Dropout(0.2)(x)
 
     return x
 
@@ -159,9 +162,9 @@ def fully_connected(encoded):
     # Dense: une couche neuronale simple avec le nombre de neurone (exemple 64)
     # fonction d'activation exp: sigmoid, relu, tanh ...
     x = Flatten()(encoded)
-    x = Dense(512, activation='relu')(x)
+    x = Dense(512, activation='relu',kernel_regularizer=L1L2(l1=1e-5, l2=1e-4))(x)
     x = Dropout(0.2)(x)
-    x = Dense(256, activation='relu')(x)
+    x = Dense(256, activation='relu',kernel_regularizer=L1L2(l1=1e-5, l2=1e-4))(x)
     x= Dropout(0.2)(x)
     sortie = Dense(6, activation='softmax')(x)
     return sortie
@@ -197,6 +200,11 @@ training_data_generator = ImageDataGenerator(
     rescale=1. / 255,
     shear_range=0.1,
     zoom_range=0.1,
+    rotation_range=30,
+    brightness_range=(0.7,1.3),
+    channel_shift_range=30,
+    height_shift_range=0.1,
+    width_shift_range=0.1,
     horizontal_flip=True)
 
 # validation_data_generator: charge les données de validation en memoire
@@ -267,12 +275,25 @@ classifier = model.fit(training_generator,
 print(classifier.history.keys())
 plt.plot(classifier.history['accuracy'])
 plt.plot(classifier.history['val_accuracy'])
-plt.title('model accuracy')
-plt.ylabel('accuracy')
-plt.xlabel('epoch')
-plt.legend(['train', 'validation'])
-fig = plt.gcf()
+plt.title('Model accuracy')
+plt.ylabel('Accuracy')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Validation'])
+fig1 = plt.gcf()
 plt.show()
+fig1.savefig("/content/drive/MyDrive/accuracy.png")
+
+#Plot loss over epochs (perte par époque)
+plt.figure()
+plt.plot(classifier.history['loss'])
+plt.plot(classifier.history['val_loss'])
+plt.title('Model Loss (Cross-entropy)')
+plt.ylabel('Loss')
+plt.xlabel('Epoch')
+plt.legend(['Train', 'Validation'])
+fig2 = plt.gcf()
+plt.show()
+fig2.savefig("/content/drive/MyDrive/loss.png")
 
 # ***********************************************
 #                    QUESTION
@@ -281,5 +302,5 @@ plt.show()
 # 5) Afficher la courbe d’exactitude par époque (Training vs Validation) ainsi que la courbe de perte (loss)
 #
 # ***********************************************
-
+classifier.save('/content/drive/MyDrive/LastModel.keras')
 

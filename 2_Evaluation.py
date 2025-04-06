@@ -61,19 +61,24 @@ Classifier: Model = load_model(model_path)
 
 
 # L'emplacement des images de test
-mainDataPath = "mnist/"
+mainDataPath = "donnees_nouvelles/"
 testPath = mainDataPath + "test"
 
 # Le nombre des images de test à évaluer
-number_images = 2000 # 1000 images pour la classe du chiffre 2 et 1000 pour la classe du chiffre 7
+number_images = 6000 # 1000 images pour la classe du chiffre 2 et 1000 pour la classe du chiffre 7
 number_images_class_0 = 1000
 number_images_class_1 = 1000
+number_images_class_2 = 1000
+number_images_class_3 = 1000
+number_images_class_4 = 1000
+number_images_class_5 = 1000
+
 
 # La taille des images à classer
-image_scale = 28
+image_scale = 256
 
 # La couleur des images à classer
-images_color_mode = "grayscale"  # grayscale or rgb
+images_color_mode = "rgb"  # grayscale or rgb
 
 # ==========================================
 # =========CHARGEMENT DES IMAGES============
@@ -85,7 +90,7 @@ test_data_generator = ImageDataGenerator(rescale=1. / 255)
 test_itr = test_data_generator.flow_from_directory(
     testPath,# place des images
     target_size=(image_scale, image_scale), # taille des images
-    class_mode="binary",# Type de classification
+    class_mode="categorical",# Type de classification
     shuffle=False,# pas besoin de les boulverser
     batch_size=1,# on classe les images une à la fois
     color_mode=images_color_mode)# couleur des images
@@ -98,7 +103,11 @@ test_itr = test_data_generator.flow_from_directory(
 
 # Les classes correctes des images (1000 pour chaque classe) -- the ground truth
 y_true = np.array([0] * number_images_class_0 + 
-                  [1] * number_images_class_1)
+                  [1] * number_images_class_1 +
+                  [2] * number_images_class_2 +
+                  [3] * number_images_class_3 +
+                  [4] * number_images_class_4 +
+                  [5] * number_images_class_5)
 
 # evaluation du modËle
 test_eval = Classifier.evaluate(test_itr, verbose=1)

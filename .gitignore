@@ -9,3 +9,7 @@ happy
 validation_set.py
 donnees_nouvelles.zip
 mnist.zip
+ModelCONVDROP+aug+.keras
+ModelFINAL_backup.keras
+ModelFINAL.keras
+Modelmnist.keras
