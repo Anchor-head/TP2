@@ -65,7 +65,7 @@ mainDataPath = "donnees_nouvelles/"
 testPath = mainDataPath + "test"
 
 # Le nombre des images de test à évaluer
-number_images = 6000 # 1000 images pour la classe du chiffre 2 et 1000 pour la classe du chiffre 7
+number_images = 6000
 number_images_class_0 = 1000
 number_images_class_1 = 1000
 number_images_class_2 = 1000
@@ -120,8 +120,7 @@ print('>Test précision:', test_eval[1])
 predicted_classes = Classifier.predict(test_itr, verbose=1)
 predicted_classes_perc = np.round(predicted_classes.copy(), 4)
 predicted_classes = np.round(predicted_classes) # on arrondie le output
-# 0 => classe 2
-# 1 => classe 7
+
 
 # Cette list contient les images bien classées
 correct = []
