@@ -1,3 +1,5 @@
+################################ Notes personelles ###############################################
+
 BIGL1L2
 Epoch 42: val_accuracy did not improve from 0.75979
 300/300 ━━━━━━━━━━━━━━━━━━━━ 381s 1s/step - accuracy: 0.7410 - loss: 76.6983 - val_accuracy: 0.7500 - val_loss: 76.8140
