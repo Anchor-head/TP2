@@ -4,22 +4,6 @@
 # Travail pratique 2
 # ===========================================================================
 
-# #===========================================================================
-# Ce modèle est un classifieur (un CNN) entrainé sur l'ensemble de données MNIST afin de distinguer entre les images des chiffres 2 et 7.
-# MNIST est une base de données contenant des chiffres entre 0 et 9 Ècrits à la main en noire et blanc de taille 28x28 pixels
-# Pour des fins d'illustration, nous avons pris seulement deux chiffres 2 et 7
-#
-# Données:
-# ------------------------------------------------
-# entrainement : classe '2': 4 000 images | classe '7': images 4 000 images
-# validation   : classe '2': 1 000 images | classe '7': images 1 000 images
-# test         : classe '2': 1 000 images | classe '7': images 1 000 images
-# ------------------------------------------------
-
-#>>> Ce code fonctionne sur MNIST.
-#>>> Vous devez donc intervenir sur ce code afin de l'adapter aux données du TP.
-#>>> À cette fin repérer les section QUESTION et insérer votre code et modification à ces endroits
-
 # ==========================================
 # ======CHARGEMENT DES LIBRAIRIES===========
 # ==========================================
@@ -168,10 +152,6 @@ def fully_connected(encoded):
     x= Dropout(0.2)(x)
     sortie = Dense(6, activation='softmax')(x)
     return sortie
-    # Puisque'on a une classification binaire, la dernière couche doit être formée d'un seul neurone avec une fonction d'activation sigmoide
-    # La fonction sigmoide nous donne une valeur entre 0 et 1
-    # On considère les résultats <=0.5 comme l'image appartenant à la classe 0 (c.-à-d. la classe qui correspond au chiffre 2)
-    # on considère les résultats >0.5 comme l'image appartenant à la classe 0 (c.-à-d. la classe qui correspond au chiffre 7)
 
 # Déclaration du modèle:
 # La sortie de l'extracteur des features sert comme entrée à la couche complétement connectée
